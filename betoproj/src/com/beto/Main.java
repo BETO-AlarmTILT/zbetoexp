@@ -17,7 +17,7 @@ public class Main {
 
         System.out.println(y);
 
-        MyFirstClass mfc = new MyFirstClass("aaa", 30, new Date());
+        MyFirstClass mfc = new MyFirstClass("aaa", 40, new Date());
 
         System.out.println(mfc);
 
