@@ -6,11 +6,24 @@
 
     <groupId>beto</groupId>
     <artifactId>betoproj</artifactId>
+    <packaging>pom</packaging>
     <version>1.1-SNAPSHOT</version>
-    <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-        </dependency></dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>7</source>
+                    <target>7</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <modules>
+        <module>module1</module>
+        <module>module2</module>
+        <module>module0</module>
+    </modules>
+
 </project>
