@@ -4,7 +4,7 @@ import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.delegate.JavaDelegate;
 
 /**
- * SendMailService
+ * SendMailService ok
  */
 public class SendMailService implements JavaDelegate {
     public void execute(DelegateExecution execution) {
