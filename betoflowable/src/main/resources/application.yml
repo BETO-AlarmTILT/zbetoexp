@@ -1,0 +1,11 @@
+management:
+  endpoint:
+    flowable:
+      enabled: true
+    health:
+      show-details: when_authorized
+
+  endpoints:
+    web:
+      exposure:
+        include: '*'
