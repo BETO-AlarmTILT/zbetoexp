@@ -1,0 +1,58 @@
+package com.beto.flowable.processes;
+
+import org.flowable.engine.RuntimeService;
+import org.flowable.engine.TaskService;
+import org.flowable.engine.test.Deployment;
+import org.flowable.spring.impl.test.FlowableSpringExtension;
+
+import static org.flowable.engine.impl.test.AbstractTestCase.assertEquals;
+
+import java.util.HashMap;
+import java.util.Map;
+import org.flowable.task.api.Task;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@ExtendWith( FlowableSpringExtension.class)
+@SpringBootTest
+public class ArticleWorkflowIntegrationTest {
+    @Autowired
+    private RuntimeService runtimeService;
+    @Autowired
+    private TaskService taskService;
+
+    @Test
+    @Deployment(resources = { "processes/myprocess.bpmn20.xml" })
+    void articleApprovalTest() {
+        Map<String, Object> variables = new HashMap<String, Object>();
+        variables.put("author", "test@beto.com");
+        variables.put("url", "https://fr.wikipedia.org/wiki/Beto");
+        runtimeService.startProcessInstanceByKey("articleReview", variables);
+        Task task = taskService.createTaskQuery()
+                .singleResult();
+        assertEquals("Review the submitted tutorial", task.getName());
+        variables.put("approved", true);
+        taskService.complete(task.getId(), variables);
+        assertEquals(0, runtimeService.createProcessInstanceQuery()
+                .count());
+    }
+
+    @Test
+    @Deployment(resources = { "processes/myprocess.bpmn20.xml" })
+    void articleApprovalRejectTest() {
+        Map<String, Object> variables = new HashMap<String, Object>();
+        variables.put("author", "test@beto.com");
+        variables.put("url", "https://fr.wikipedia.org/wiki/Beto");
+        runtimeService.startProcessInstanceByKey("articleReview", variables);
+        Task task = taskService.createTaskQuery()
+                .singleResult();
+        assertEquals("Review the submitted tutorial", task.getName());
+        variables.put("approved", false);
+        taskService.complete(task.getId(), variables);
+        assertEquals(0, runtimeService.createProcessInstanceQuery()
+                .count());
+    }
+
+}
