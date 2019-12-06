@@ -17,11 +17,22 @@
         <parallelGateway id="paralgatein"></parallelGateway>
         <sequenceFlow sourceRef="paralgatein" targetRef="alarmone" />
         <serviceTask id="alarmone" name="Alarm One"
-                     flowable:class="com.beto.flowable.service.AlarmService" />
+                     flowable:class="com.beto.flowable.service.AlarmService">
+            <extensionElements>
+                <flowable:field name="alarmName" stringValue="Alarm One" />
+            </extensionElements>
+        </serviceTask>
         <sequenceFlow sourceRef="alarmone" targetRef="paralgateout" />
         <sequenceFlow sourceRef="paralgatein" targetRef="alarmtwo" />
         <serviceTask id="alarmtwo" name="Alarm Two"
-                     flowable:class="com.beto.flowable.service.AlarmService" />
+                     flowable:class="com.beto.flowable.service.AlarmService" >
+            <extensionElements>
+                <flowable:field name="alarmName">
+                    <flowable:string>Alarm x Two</flowable:string>
+                </flowable:field>
+            </extensionElements>
+
+        </serviceTask>
         <sequenceFlow sourceRef="alarmtwo" targetRef="paralgateout" />
         <sequenceFlow sourceRef="paralgatein" targetRef="alarmthree" />
         <serviceTask id="alarmthree" name="Alarm Three"

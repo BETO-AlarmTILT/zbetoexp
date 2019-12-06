@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions
+        xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+        xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+        xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+        xmlns:flowable="http://flowable.org/bpmn"
+        typeLanguage="http://www.w3.org/2001/XMLSchema"
+        expressionLanguage="http://www.w3.org/1999/XPath"
+        targetNamespace="http://www.flowable.org/processdef">
+    <process id="myactivityteninparallel"
+             name="A workflow including ten activity calls in parallel" isExecutable="true">
+        <startEvent id="start" />
+        <sequenceFlow sourceRef="start" targetRef="paralgatein" />
+        <parallelGateway id="paralgatein"></parallelGateway>
+        <sequenceFlow sourceRef="paralgatein" targetRef="alarmone" />
+        <!--
+        <serviceTask id="alarmone" name="Alarm One"
+                     flowable:class="com.beto.flowable.service.AlarmService" /> -->
+        <callActivity id="alarmone" name="call an alarm process - Alarm One" calledElement="mybasic">
+            <extensionElements>
+                <flowable:in sourceExpression="alarm process - Alarm One" target="alarmName" />
+            </extensionElements>
+        </callActivity>
+        <sequenceFlow sourceRef="alarmone" targetRef="paralgateout" />
+        <sequenceFlow sourceRef="paralgatein" targetRef="alarmtwo" />
+        <!--
+        <serviceTask id="alarmtwo" name="Alarm Two"
+                     flowable:class="com.beto.flowable.service.AlarmService" /> -->
+        <callActivity id="alarmtwo" name="call an alarm process - Alarm Two" calledElement="mybasic" >
+            <extensionElements>
+                <flowable:in sourceExpression="alarm process - Alarm Two" target="alarmName" />
+            </extensionElements>
+        </callActivity>
+        <sequenceFlow sourceRef="alarmtwo" targetRef="paralgateout" />
+        <sequenceFlow sourceRef="paralgatein" targetRef="alarmthree" />
+        <!--
+        <serviceTask id="alarmthree" name="Alarm Three"
+                     flowable:class="com.beto.flowable.service.AlarmService" /> -->
+        <callActivity id="alarmthree" name="call an alarm process - Alarm Three" calledElement="mybasic" >
+            <extensionElements>
+                <flowable:in sourceExpression="alarm process - Alarm Three" target="alarmName" />
+            </extensionElements>
+        </callActivity>
+        <sequenceFlow sourceRef="alarmthree" targetRef="paralgateout" />
+        <sequenceFlow sourceRef="paralgatein" targetRef="alarmfour" />
+        <!--
+        <serviceTask id="alarmfour" name="Alarm Four"
+                     flowable:class="com.beto.flowable.service.AlarmService" /> -->
+        <callActivity id="alarmfour" name="call an alarm process - Alarm Four" calledElement="mybasic" >
+            <extensionElements>
+                <flowable:in sourceExpression="alarm process - Alarm Four" target="alarmName" />
+            </extensionElements>
+        </callActivity>
+        <sequenceFlow sourceRef="alarmfour" targetRef="paralgateout" />
+        <sequenceFlow sourceRef="paralgatein" targetRef="alarmfive" />
+        <!--
+        <serviceTask id="alarmfive" name="Alarm Five"
+                     flowable:class="com.beto.flowable.service.AlarmService" /> -->
+        <callActivity id="alarmfive" name="call an alarm process - Alarm Five" calledElement="mybasic" >
+            <extensionElements>
+                <flowable:in sourceExpression="alarm process - Alarm Five" target="alarmName" />
+            </extensionElements>
+        </callActivity>
+        <sequenceFlow sourceRef="alarmfive" targetRef="paralgateout" />
+        <sequenceFlow sourceRef="paralgatein" targetRef="alarmsix" />
+        <!--
+        <serviceTask id="alarmsix" name="Alarm Six"
+                     flowable:class="com.beto.flowable.service.AlarmService" /> -->
+        <callActivity id="alarmsix" name="call an alarm process - Alarm Six" calledElement="mybasic" >
+            <extensionElements>
+                <flowable:in sourceExpression="alarm process - Alarm Six" target="alarmName" />
+            </extensionElements>
+        </callActivity>
+        <sequenceFlow sourceRef="alarmsix" targetRef="paralgateout" >
+        </sequenceFlow>
+        <sequenceFlow sourceRef="paralgatein" targetRef="alarmseven" >
+        </sequenceFlow>
+        <!--
+        <serviceTask id="alarmseven" name="Alarm Seven"
+                     flowable:class="com.beto.flowable.service.AlarmService" /> -->
+        <callActivity id="alarmseven" name="call an alarm process - Alarm Seven" calledElement="mybasic" >
+            <extensionElements>
+                <flowable:in sourceExpression="alarm process - Alarm Seven" target="alarmName" />
+            </extensionElements>
+        </callActivity>
+        <sequenceFlow sourceRef="alarmseven" targetRef="paralgateout" />
+        <sequenceFlow sourceRef="paralgatein" targetRef="alarmeight" />
+        <!--
+        <serviceTask id="alarmeight" name="Alarm Eight"
+                     flowable:class="com.beto.flowable.service.AlarmService" /> -->
+        <callActivity id="alarmeight" name="call an alarm process - Alarm Eight" calledElement="mybasic" >
+            <extensionElements>
+                <flowable:in sourceExpression="alarm process - Alarm Eight" target="alarmName" />
+            </extensionElements>
+        </callActivity>
+        <sequenceFlow sourceRef="alarmeight" targetRef="paralgateout" />
+        <sequenceFlow sourceRef="paralgatein" targetRef="alarmnine" />
+        <!--
+        <serviceTask id="alarmnine" name="Alarm Nine"
+                     flowable:class="com.beto.flowable.service.AlarmService" /> -->
+        <callActivity id="alarmnine" name="call an alarm process - Alarm Nine" calledElement="mybasic" >
+            <extensionElements>
+                <flowable:in sourceExpression="alarm process - Alarm Nine" target="alarmName" />
+            </extensionElements>
+        </callActivity>
+        <sequenceFlow sourceRef="alarmnine" targetRef="paralgateout" />
+        <sequenceFlow sourceRef="paralgatein" targetRef="alarmten" />
+        <!--
+        <serviceTask id="alarmten" name="Alarm Ten"
+                     flowable:class="com.beto.flowable.service.AlarmService" /> -->
+        <callActivity id="alarmten" name="call an alarm process - Alarm Ten" calledElement="mybasic" >
+            <extensionElements>
+                <flowable:in sourceExpression="alarm process - Alarm Ten" target="alarmName" />
+            </extensionElements>
+        </callActivity>
+        <sequenceFlow sourceRef="alarmten" targetRef="paralgateout" />
+        <parallelGateway id="paralgateout"></parallelGateway>
+        <sequenceFlow sourceRef="paralgateout" targetRef="end" />
+        <endEvent id="end" />
+    </process>
+</definitions>
