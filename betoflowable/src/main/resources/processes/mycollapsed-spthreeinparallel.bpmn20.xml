@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.flowable.org/processdef">
+  <process id="my-collapsed-subprocess-three-paral" name="my-collapsed-subprocess-three-paral" isExecutable="true">
+    <startEvent id="start"></startEvent>
+    <sequenceFlow id="start_to_sp" sourceRef="start" targetRef="sp_three_alarm_in_paral"></sequenceFlow>
+    <endEvent id="end"></endEvent>
+    <subProcess id="sp_three_alarm_in_paral" name="sp_three_alarm_in_paral"  >
+
+      <startEvent id="sp_start" />
+
+      <sequenceFlow id="sp_start_to_paralgatein" sourceRef="sp_start" targetRef="paralgatein" />
+      <parallelGateway id="paralgatein"></parallelGateway>
+      <sequenceFlow id="sp_paralgatein_to_alarmone" sourceRef="paralgatein" targetRef="alarmone" />
+      <serviceTask id="alarmone" name="Alarm One"
+                   flowable:class="com.beto.flowable.service.AlarmService" />
+      <sequenceFlow id="sp_alarmone_to_paralgateout" sourceRef="alarmone" targetRef="paralgateout" />
+      <sequenceFlow id="sp_paralgatein_to_alarmtwo" sourceRef="paralgatein" targetRef="alarmtwo" />
+      <serviceTask id="alarmtwo" name="Alarm Two"
+                   flowable:class="com.beto.flowable.service.AlarmService" />
+      <sequenceFlow id="sp_alarmtwo_to_paralgateout" sourceRef="alarmtwo" targetRef="paralgateout" />
+      <sequenceFlow id="sp_paralgatein_to_alarmthree" sourceRef="paralgatein" targetRef="alarmthree" />
+      <serviceTask id="alarmthree" name="Alarm Three"
+                   flowable:class="com.beto.flowable.service.AlarmService" />
+      <sequenceFlow id="sp_alarmthree_to_paralgateout" sourceRef="alarmthree" targetRef="paralgateout" />
+      <parallelGateway id="paralgateout"></parallelGateway>
+      <sequenceFlow id="sp_paralgateout_to_sp_end" sourceRef="paralgateout" targetRef="sp_end" />
+
+      <endEvent id="sp_end"></endEvent>
+      <textAnnotation id="textannotation2">
+        <text>F24 Alarming Process</text>
+      </textAnnotation>
+      <association associationDirection="One" id="association2" sourceRef="alarmthree" targetRef="textannotation2"/>
+    </subProcess>
+    <sequenceFlow id="sp_to_end" name="test" sourceRef="sp_three_alarm_in_paral" targetRef="end"></sequenceFlow>
+    <textAnnotation id="textannotation1">
+      <text>Sub process including three alarming processess launched in parallel</text>
+    </textAnnotation>
+    <association associationDirection="One" id="association1" sourceRef="sp_three_alarm_in_paral" targetRef="textannotation1"/>
+  </process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_my-collapsed-subprocess-three-paral">
+    <bpmndi:BPMNPlane bpmnElement="my-collapsed-subprocess-three-paral" id="BPMNPlane_my-collapsed-subprocess-three-paral">
+      <bpmndi:BPMNShape bpmnElement="start" id="BPMNShape_start">
+        <omgdc:Bounds height="30.0" width="30.0" x="73.0" y="96.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="end" id="BPMNShape_end">
+        <omgdc:Bounds height="28.0" width="28.0" x="340.0" y="99.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sp_three_alarm_in_paral" id="BPMNShape_sp_three_alarm_in_paral" isExpanded="false">
+        <omgdc:Bounds height="80.0" width="100.0" x="165.0" y="73.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="textannotation1" id="BPMNShape_textannotation1">
+        <omgdc:Bounds height="80.0" width="150.0" x="320.0" y="285.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="association1" id="BPMNShape_association1">
+        <omgdc:Bounds height="171.35388842477013" width="84.86867115377765" x="235.13132884622235" y="153.64611157522987"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="association1" id="BPMNEdge_association1">
+        <omgdi:waypoint x="234.7865566037736" y="152.95"></omgdi:waypoint>
+        <omgdi:waypoint x="320.0" y="324.94907187053775"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sp_to_end" id="BPMNEdge_sp_to_end">
+        <omgdi:waypoint x="264.95000000000005" y="113.0"></omgdi:waypoint>
+        <omgdi:waypoint x="340.0" y="113.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="start_to_sp" id="BPMNEdge_start_to_sp">
+        <omgdi:waypoint x="102.94809373794054" y="111.23540466059245"></omgdi:waypoint>
+        <omgdi:waypoint x="164.99999999999966" y="112.21259842519686"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_sp_three_alarm_in_paral">
+    <bpmndi:BPMNPlane bpmnElement="sp_three_alarm_in_paral" id="BPMNPlane_sp_three_alarm_in_paral">
+      <bpmndi:BPMNShape bpmnElement="sp_start" id="BPMNShape_sp_start">
+        <omgdc:Bounds height="30.0" width="30.0" x="90.0" y="135.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sp_start_to_paralgatein" id="BPMNEdge_sp_start_to_paralgatein">
+        <omgdi:waypoint x="119.94999593213504" y="150.0"></omgdi:waypoint>
+        <omgdi:waypoint x="165.0" y="150.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape bpmnElement="paralgatein" id="BPMNShape_paralgatein">
+        <omgdc:Bounds height="40.0" width="40.0" x="165.0" y="130.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="alarmone" id="BPMNShape_alarmone">
+        <omgdc:Bounds height="80.0" width="100.0" x="232.0" y="10.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sp_alarmone_to_paralgateout" id="BPMNEdge_sp_alarmone_to_paralgateout">
+        <omgdi:waypoint x="328.1609938922821" y="89.95"></omgdi:waypoint>
+        <omgdi:waypoint x="377.4193714580113" y="132.57731958762886"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sp_paralgatein_to_alarmtwo" id="BPMNEdge_sp_paralgatein_to_alarmtwo">
+        <omgdi:waypoint x="204.94698538367845" y="150.0"></omgdi:waypoint>
+        <omgdi:waypoint x="231.999999999988" y="150.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape bpmnElement="alarmtwo" id="BPMNShape_alarmtwo">
+        <omgdc:Bounds height="80.0" width="100.0" x="232.0" y="110.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sp_alarmtwo_to_paralgateout" id="BPMNEdge_sp_alarmtwo_to_paralgateout">
+        <omgdi:waypoint x="331.94999999999527" y="150.25355329949238"></omgdi:waypoint>
+        <omgdi:waypoint x="360.39795918367247" y="150.39795918367346"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sp_paralgatein_to_alarmthree" id="BPMNEdge_sp_paralgatein_to_alarmthree">
+        <omgdi:waypoint x="190.05133903920483" y="164.8986187845304"></omgdi:waypoint>
+        <omgdi:waypoint x="238.779437105112" y="210.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape bpmnElement="alarmthree" id="BPMNShape_alarmthree">
+        <omgdc:Bounds height="80.0" width="100.0" x="232.0" y="210.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="textannotation2" id="BPMNShape_textannotation2">
+        <omgdc:Bounds height="50.0" width="100.0" x="420.0" y="350.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sp_alarmthree_to_paralgateout" id="BPMNEdge_sp_alarmthree_to_paralgateout">
+        <omgdi:waypoint x="325.5011111111111" y="210.0"></omgdi:waypoint>
+        <omgdi:waypoint x="374.78723404255317" y="164.76329787234042"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape bpmnElement="paralgateout" id="BPMNShape_paralgateout">
+        <omgdc:Bounds height="40.0" width="40.0" x="360.0" y="130.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sp_paralgateout_to_sp_end" id="BPMNEdge_sp_paralgateout_to_sp_end">
+        <omgdi:waypoint x="399.5752202643172" y="150.36029411764707"></omgdi:waypoint>
+        <omgdi:waypoint x="435.00036277579136" y="150.101822333126"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape bpmnElement="sp_end" id="BPMNShape_sp_end">
+        <omgdc:Bounds height="28.0" width="28.0" x="435.0" y="136.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sp_paralgatein_to_alarmone" id="BPMNEdge_sp_paralgatein_to_alarmone">
+        <omgdi:waypoint x="190.08879781420762" y="135.11475409836066"></omgdi:waypoint>
+        <omgdi:waypoint x="238.8181818181818" y="89.95"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="association2" id="BPMNEdge_association2">
+        <omgdi:waypoint x="420.0" y="203.0"/>
+        <omgdi:waypoint x="289.0" y="204.0"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+
+</definitions>

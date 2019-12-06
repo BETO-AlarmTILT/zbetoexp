@@ -1,3 +1,7 @@
+server:
+  port:
+    4321
+
 management:
   endpoint:
     flowable:

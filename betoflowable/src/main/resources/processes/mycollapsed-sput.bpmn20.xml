@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.flowable.org/processdef">
+  <process id="simple-collapsed-subprocess-case1" name="simple-collapsed-subprocess-case1" isExecutable="true">
+    <startEvent id="start"></startEvent>
+    <sequenceFlow sourceRef="start" targetRef="sp_advance"></sequenceFlow>
+    <endEvent id="end"></endEvent>
+    <subProcess id="sp_advance" name="advance">
+      <startEvent id="sp_start"></startEvent>
+      <userTask id="sp_user" name="User task 1"></userTask>
+      <endEvent id="sp_end"></endEvent>
+      <sequenceFlow name="to ut" sourceRef="sp_start" targetRef="sp_user"></sequenceFlow>
+      <sequenceFlow name="to end" sourceRef="sp_user" targetRef="sp_end"></sequenceFlow>
+      <textAnnotation id="textannotation2">
+        <text>Sub Test Annotation</text>
+      </textAnnotation>
+      <association associationDirection="One" id="association2" sourceRef="sp_user" targetRef="textannotation2"/>
+    </subProcess>
+    <sequenceFlow name="test" sourceRef="sp_advance" targetRef="end"></sequenceFlow>
+    <textAnnotation id="textannotation1">
+      <text>Test Annotation</text>
+    </textAnnotation>
+    <association associationDirection="One" id="association1" sourceRef="start" targetRef="textannotation1"/>
+  </process>
+</definitions>

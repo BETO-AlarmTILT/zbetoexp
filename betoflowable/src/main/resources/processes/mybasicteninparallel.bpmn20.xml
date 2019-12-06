@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions
+        xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+        xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+        xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+        xmlns:flowable="http://flowable.org/bpmn"
+        typeLanguage="http://www.w3.org/2001/XMLSchema"
+        expressionLanguage="http://www.w3.org/1999/XPath"
+        targetNamespace="http://www.flowable.org/processdef">
+    <process id="mybasicteninparallel"
+             name="A less basic alarming process with ten steps in parallel" isExecutable="true">
+        <startEvent id="start" />
+        <sequenceFlow sourceRef="start" targetRef="paralgatein" />
+        <parallelGateway id="paralgatein"></parallelGateway>
+        <sequenceFlow sourceRef="paralgatein" targetRef="alarmone" />
+        <serviceTask id="alarmone" name="Alarm One"
+                     flowable:class="com.beto.flowable.service.AlarmService" />
+        <sequenceFlow sourceRef="alarmone" targetRef="paralgateout" />
+        <sequenceFlow sourceRef="paralgatein" targetRef="alarmtwo" />
+        <serviceTask id="alarmtwo" name="Alarm Two"
+                     flowable:class="com.beto.flowable.service.AlarmService" />
+        <sequenceFlow sourceRef="alarmtwo" targetRef="paralgateout" />
+        <sequenceFlow sourceRef="paralgatein" targetRef="alarmthree" />
+        <serviceTask id="alarmthree" name="Alarm Three"
+                     flowable:class="com.beto.flowable.service.AlarmService" />
+        <sequenceFlow sourceRef="alarmthree" targetRef="paralgateout" />
+        <sequenceFlow sourceRef="paralgatein" targetRef="alarmfour" />
+        <serviceTask id="alarmfour" name="Alarm Four"
+                     flowable:class="com.beto.flowable.service.AlarmService" />
+        <sequenceFlow sourceRef="alarmfour" targetRef="paralgateout" />
+        <sequenceFlow sourceRef="paralgatein" targetRef="alarmfive" />
+        <serviceTask id="alarmfive" name="Alarm Five"
+                     flowable:class="com.beto.flowable.service.AlarmService" />
+        <sequenceFlow sourceRef="alarmfive" targetRef="paralgateout" />
+        <sequenceFlow sourceRef="paralgatein" targetRef="alarmsix" />
+        <serviceTask id="alarmsix" name="Alarm Six"
+                     flowable:class="com.beto.flowable.service.AlarmService" />
+        <sequenceFlow sourceRef="alarmsix" targetRef="paralgateout" />
+        <sequenceFlow sourceRef="paralgatein" targetRef="alarmseven" />
+        <serviceTask id="alarmseven" name="Alarm Seven"
+                     flowable:class="com.beto.flowable.service.AlarmService" />
+        <sequenceFlow sourceRef="alarmseven" targetRef="paralgateout" />
+        <sequenceFlow sourceRef="paralgatein" targetRef="alarmeight" />
+        <serviceTask id="alarmeight" name="Alarm Eight"
+                     flowable:class="com.beto.flowable.service.AlarmService" />
+        <sequenceFlow sourceRef="alarmeight" targetRef="paralgateout" />
+        <sequenceFlow sourceRef="paralgatein" targetRef="alarmnine" />
+        <serviceTask id="alarmnine" name="Alarm Nine"
+                     flowable:class="com.beto.flowable.service.AlarmService" />
+        <sequenceFlow sourceRef="alarmnine" targetRef="paralgateout" />
+        <sequenceFlow sourceRef="paralgatein" targetRef="alarmten" />
+        <serviceTask id="alarmten" name="Alarm Ten"
+                     flowable:class="com.beto.flowable.service.AlarmService" />
+        <sequenceFlow sourceRef="alarmten" targetRef="paralgateout" />
+        <parallelGateway id="paralgateout"></parallelGateway>
+        <sequenceFlow sourceRef="paralgateout" targetRef="end" />
+        <endEvent id="end" />
+    </process>
+</definitions>
