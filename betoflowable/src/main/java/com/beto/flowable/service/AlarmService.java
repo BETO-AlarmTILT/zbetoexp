@@ -3,8 +3,14 @@ package com.beto.flowable.service;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.delegate.JavaDelegate;
 import org.flowable.engine.impl.el.FixedValue;
+import org.slf4j.LoggerFactory;
+
+import org.slf4j.Logger;
 
 public class AlarmService implements JavaDelegate {
+    private static final Logger log = LoggerFactory.getLogger( AlarmService.class );
+
+
     private FixedValue alarmName;
 
     public FixedValue getAlarmName() {
@@ -16,10 +22,10 @@ public class AlarmService implements JavaDelegate {
     }
 
     public void execute(DelegateExecution execution) {
-        System.out.println("Alarm activated ... processInstanceId/Task -> "+execution.getProcessInstanceId()+"/"+execution.getCurrentFlowElement().getName());
-        System.out.println("process variable alarmName:"+execution.getVariable("alarmName")) ;
+        log.info("Alarm activated ... processInstanceId/Task -> "+execution.getProcessInstanceId()+"/"+execution.getCurrentFlowElement().getName());
+        log.info("process variable alarmName:"+execution.getVariable("alarmName")) ;
         if (this.alarmName!=null) {
-            System.out.println("fixed value attribute alarmName:"+((String)this.alarmName.getValue(execution)).toUpperCase()) ;
+            log.info("fixed value attribute alarmName:"+((String)this.alarmName.getValue(execution)).toUpperCase()) ;
         }
 
     }
