@@ -1,13 +1,25 @@
 package com.beto.flowable.domain;
 
 public class EmergencyScenario {
+    private String id;
     private String name;
     private String workflow;
 
-    public EmergencyScenario( String name, String workflow ) {
+    public EmergencyScenario(String id, String name, String workflow ) {
 
+        this.id = id;
         this.name = name;
         this.workflow = workflow;
+    }
+
+    public String getId() {
+
+        return id;
+    }
+
+    public void setId( String id ) {
+
+        this.id = id;
     }
 
     public String getName() {
@@ -32,6 +44,6 @@ public class EmergencyScenario {
 
     @Override public String toString() {
 
-        return "EmergencyScenario{" + "name='" + name + '\'' + ", workflow='" + workflow + '\'' + '}';
+        return "EmergencyScenario{" + "id='" + id + '\'' + "name='" + name + '\'' + ", workflow='" + workflow + '\'' + '}';
     }
 }

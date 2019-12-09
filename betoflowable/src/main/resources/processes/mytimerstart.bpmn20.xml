@@ -3,7 +3,7 @@
 <process id="mytimer" name="mytimer" isExecutable="true">
     <startEvent id="sid-F8F14D20-6932-4C24-9034-ED5167761546" isInterrupting="false">
         <timerEventDefinition>
-            <timeCycle>R10/PT1M</timeCycle>
+            <timeCycle>R2/PT10S</timeCycle>
         </timerEventDefinition>
     </startEvent>
 
