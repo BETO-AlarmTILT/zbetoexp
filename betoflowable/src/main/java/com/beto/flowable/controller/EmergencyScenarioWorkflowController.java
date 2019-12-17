@@ -33,4 +33,8 @@ public class EmergencyScenarioWorkflowController {
         service.review(alertLevel);
     }
 
+    @PostMapping("/emergency-event")
+    public void registerReply() {
+        service.registerReply();
+    }
 }

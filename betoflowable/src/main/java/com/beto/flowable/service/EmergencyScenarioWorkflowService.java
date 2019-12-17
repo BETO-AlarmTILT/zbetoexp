@@ -4,6 +4,13 @@ import com.beto.flowable.domain.AlertLevel;
 import com.beto.flowable.domain.Approval;
 import com.beto.flowable.domain.Article;
 import com.beto.flowable.domain.EmergencyScenario;
+import com.beto.flowable.event.listener.MyEventListener;
+import com.beto.flowable.event.listener.MyFlowableEventType;
+import com.beto.flowable.event.listener.RegisterReplyEvent;
+import com.beto.flowable.event.listener.YourEventListener;
+import org.flowable.common.engine.api.delegate.event.FlowableEvent;
+import org.flowable.common.engine.api.delegate.event.FlowableEventType;
+import org.flowable.common.engine.impl.event.FlowableEventSupport;
 import org.flowable.engine.RuntimeService;
 import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +60,16 @@ public class EmergencyScenarioWorkflowService {
         taskService.complete(alertLevel.getId(), variables);
     }
 
+    @Transactional
+    public void registerReply() {
+        FlowableEventSupport flowableEventSupport=new FlowableEventSupport();
+        //runtimeService.addEventListener(new YourEventListener());
+        runtimeService.addEventListener(new MyEventListener());
+        MyFlowableEventType testEventType = new MyFlowableEventType("registerReply");
+        RegisterReplyEvent registerReplyEvent = new RegisterReplyEvent(testEventType);
+        runtimeService.dispatchEvent(registerReplyEvent);
+        //runtimeService.messageEventReceived();
+    }
 
 
 }
