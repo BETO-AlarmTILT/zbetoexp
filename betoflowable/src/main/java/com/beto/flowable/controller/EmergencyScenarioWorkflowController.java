@@ -4,6 +4,7 @@ import com.beto.flowable.domain.AlertLevel;
 import com.beto.flowable.domain.Approval;
 import com.beto.flowable.domain.Article;
 import com.beto.flowable.domain.EmergencyScenario;
+import com.beto.flowable.domain.MessageEvent;
 import com.beto.flowable.service.EmergencyScenarioWorkflowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,4 +38,16 @@ public class EmergencyScenarioWorkflowController {
     public void registerReply() {
         service.registerReply();
     }
+
+    @GetMapping("/emergency-active-workflows")
+    public List<EmergencyScenario> getActiveProcessInstances() {
+        return service.getActiveProcessIntances();
+    }
+
+    @PostMapping("/emergency-message-event")
+    public void sendMessage(@RequestBody MessageEvent messageEvent ) {
+        service.sendMessageEvent(messageEvent.getProcessId(),messageEvent.getMessageId());
+    }
+
+
 }

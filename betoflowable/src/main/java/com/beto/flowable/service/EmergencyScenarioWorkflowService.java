@@ -12,11 +12,15 @@ import org.flowable.common.engine.api.delegate.event.FlowableEvent;
 import org.flowable.common.engine.api.delegate.event.FlowableEventType;
 import org.flowable.common.engine.impl.event.FlowableEventSupport;
 import org.flowable.engine.RuntimeService;
+import org.flowable.engine.runtime.Execution;
+import org.flowable.engine.runtime.ProcessInstance;
+import org.flowable.engine.runtime.ProcessInstanceQuery;
 import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,5 +75,34 @@ public class EmergencyScenarioWorkflowService {
         //runtimeService.messageEventReceived();
     }
 
+    @Transactional
+    public List<EmergencyScenario> getActiveProcessIntances() {
+
+        List<ProcessInstance> processInstances =
+                runtimeService.createProcessInstanceQuery().active().list();
+
+        List<EmergencyScenario> list = processInstances.stream()
+                .map( processInstance -> new EmergencyScenario( processInstance.getId(), processInstance.getName(),
+                        processInstance.getProcessDefinitionKey() ) ).collect( Collectors.toList() );
+
+        return list;
+
+    }
+
+
+    @Transactional
+    public void sendMessageEvent(String processInstanceId, String messageEventName) {
+
+
+        Execution execution = runtimeService.createExecutionQuery()
+                .processInstanceId(processInstanceId)
+                .messageEventSubscriptionName(messageEventName).list().get(0);
+
+        if (execution!=null) {
+            runtimeService.messageEventReceived(messageEventName, execution.getId());
+        }
+
+
+    }
 
 }
