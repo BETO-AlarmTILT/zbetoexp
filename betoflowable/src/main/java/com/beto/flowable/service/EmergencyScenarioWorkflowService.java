@@ -1,9 +1,7 @@
 package com.beto.flowable.service;
 
-import com.beto.flowable.domain.AlertLevel;
-import com.beto.flowable.domain.Approval;
-import com.beto.flowable.domain.Article;
-import com.beto.flowable.domain.EmergencyScenario;
+import com.beto.flowable.controller.EmergencyScenarioWorkflowController;
+import com.beto.flowable.domain.*;
 import com.beto.flowable.event.listener.MyEventListener;
 import com.beto.flowable.event.listener.MyFlowableEventType;
 import com.beto.flowable.event.listener.RegisterReplyEvent;
@@ -58,6 +56,18 @@ public class EmergencyScenarioWorkflowService {
     }
 
     @Transactional
+    public List<EmergencyScenario> getActiveTasks() {
+        List<Task> tasks = taskService.createTaskQuery().active()
+                .list();
+        return tasks.stream()
+                .map(task -> {
+                    Map<String, Object> variables = taskService.getVariables(task.getId());
+                    return new EmergencyScenario(task.getId(), (String) variables.get("name"), (String) variables.get("workflow"));
+                })
+                .collect( Collectors.toList());
+    }
+
+    @Transactional
     public void review( AlertLevel alertLevel) {
         Map<String, Object> variables = new HashMap<String, Object>();
         variables.put("alertlevel", Integer.valueOf(alertLevel.getAlertLevel()));
@@ -101,6 +111,23 @@ public class EmergencyScenarioWorkflowService {
         if (execution!=null) {
             runtimeService.messageEventReceived(messageEventName, execution.getId());
         }
+
+
+    }
+
+    @Transactional
+    public List<EmergencyExecution> listExecutions(String processInstanceId) {
+
+
+        List<Execution> executions = runtimeService.createExecutionQuery()
+                .processInstanceId(processInstanceId)
+                .list();
+
+        List<EmergencyExecution> list = executions.stream()
+                .map( execution -> new EmergencyExecution( execution.getId(), execution.getName(), execution.getProcessInstanceId(), execution.getActivityId(), execution.getDescription()
+                        ) ).collect( Collectors.toList() );
+
+        return list;
 
 
     }

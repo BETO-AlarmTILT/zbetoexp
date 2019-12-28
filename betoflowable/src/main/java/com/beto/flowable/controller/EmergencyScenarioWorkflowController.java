@@ -1,17 +1,9 @@
 package com.beto.flowable.controller;
 
-import com.beto.flowable.domain.AlertLevel;
-import com.beto.flowable.domain.Approval;
-import com.beto.flowable.domain.Article;
-import com.beto.flowable.domain.EmergencyScenario;
-import com.beto.flowable.domain.MessageEvent;
+import com.beto.flowable.domain.*;
 import com.beto.flowable.service.EmergencyScenarioWorkflowService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,8 +17,8 @@ public class EmergencyScenarioWorkflowController {
     }
 
     @GetMapping("/emergency-tasks")
-    public List<EmergencyScenario> getTasks(@RequestParam String assignee) {
-        return service.getTasks(assignee);
+    public List<EmergencyScenario> getTasks() {
+        return service.getActiveTasks();
     }
 
     @PostMapping("/emergency-review")
@@ -49,5 +41,9 @@ public class EmergencyScenarioWorkflowController {
         service.sendMessageEvent(messageEvent.getProcessId(),messageEvent.getMessageId());
     }
 
+    @GetMapping("/emergency-executions/{processInstanceId}")
+    public List<EmergencyExecution> getEmergencyExecutions(@PathVariable String processInstanceId) {
+        return service.listExecutions(processInstanceId);
+    }
 
 }
