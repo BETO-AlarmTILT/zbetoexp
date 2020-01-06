@@ -1,6 +1,8 @@
 server:
   port:
     4321
+#  undertow:
+#    allow-encoded-slash: true
 
 management:
   endpoint:
@@ -22,10 +24,13 @@ spring:
     username: flowable
     password: flowable
 
-  jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-    show-sql: true
-    hibernate:
-     ddl-auto: create-drop
+    hikari:
+      minimum-idle: 10
+      maximum-pool-size: 100
+#  jpa:
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+#    show-sql: true
+#    hibernate:
+#     ddl-auto: create-drop
