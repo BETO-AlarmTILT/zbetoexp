@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.flowable.org/processdef">
+  <process id="error_management_multiple" name="ErrorManagementMultiple" isExecutable="true">
+    <documentation>Investigate on exception/error management</documentation>
+    <startEvent id="startEvent1" flowable:formFieldValidation="true"></startEvent>
+    <serviceTask id="MyServiceTask" name="MyServiceTask" flowable:class="com.beto.flowable.service.TaskWithErrorManagement"></serviceTask>
+    <endEvent id="sid-0F18FF3F-63D0-4E0C-BC85-2C8B1F2AFB43"></endEvent>
+    <sequenceFlow id="sid-37053FBB-9D8E-4BCB-99A9-A6D9C340D9F6" sourceRef="startEvent1" targetRef="MyServiceTask"></sequenceFlow>
+    <scriptTask id="sid-950E4CCD-8587-4CC6-BE1A-3D36BD734814" name="Error Log X" scriptFormat="JavaScript" flowable:autoStoreVariables="false">
+      <script><![CDATA[print("An error occured X...");]]></script>
+    </scriptTask>
+    <sequenceFlow id="sid-BBE1A720-892B-44F4-A255-50537986CE05" sourceRef="BusinessExceptionOccurredX" targetRef="sid-950E4CCD-8587-4CC6-BE1A-3D36BD734814"></sequenceFlow>
+    <sequenceFlow id="sid-592B3704-B571-44E2-97FC-D558A5945D29" sourceRef="sid-950E4CCD-8587-4CC6-BE1A-3D36BD734814" targetRef="sid-A46B9585-6CAE-4FAF-8555-0E258298AD39"></sequenceFlow>
+    <endEvent id="sid-A46B9585-6CAE-4FAF-8555-0E258298AD39"></endEvent>
+    <sequenceFlow id="no-exception" name="no-exception" sourceRef="MyServiceTask" targetRef="sid-0F18FF3F-63D0-4E0C-BC85-2C8B1F2AFB43"></sequenceFlow>
+    <boundaryEvent id="BusinessExceptionOccurredY" name="Y" attachedToRef="MyServiceTask">
+      <errorEventDefinition errorRef="BusinessExceptionOccurredY"></errorEventDefinition>
+    </boundaryEvent>
+    <boundaryEvent id="BusinessExceptionOccurredX" name="X" attachedToRef="MyServiceTask">
+      <errorEventDefinition errorRef="BusinessExceptionOccurredX"></errorEventDefinition>
+    </boundaryEvent>
+    <scriptTask id="sid-4C354C9C-8A48-4CC1-A664-79FC206F6FA1" name="Error Log Y" scriptFormat="JavaScript" flowable:autoStoreVariables="false">
+      <script><![CDATA[print("An error occured Y...");]]></script>
+    </scriptTask>
+    <sequenceFlow id="sid-6A386F24-45D4-4DE0-B0B8-C5F01F00C5BF" sourceRef="BusinessExceptionOccurredY" targetRef="sid-4C354C9C-8A48-4CC1-A664-79FC206F6FA1"></sequenceFlow>
+    <endEvent id="sid-06354C75-7C0D-4195-B53C-18CA8058E0A0"></endEvent>
+    <sequenceFlow id="sid-8182F474-78A1-401E-9DD7-7ECBB199EA18" sourceRef="sid-4C354C9C-8A48-4CC1-A664-79FC206F6FA1" targetRef="sid-06354C75-7C0D-4195-B53C-18CA8058E0A0"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_error_management_multiple">
+    <bpmndi:BPMNPlane bpmnElement="error_management_multiple" id="BPMNPlane_error_management_multiple">
+      <bpmndi:BPMNShape bpmnElement="startEvent1" id="BPMNShape_startEvent1">
+        <omgdc:Bounds height="30.0" width="30.0" x="100.0" y="164.5"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="MyServiceTask" id="BPMNShape_MyServiceTask">
+        <omgdc:Bounds height="111.0" width="96.0" x="214.0" y="124.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-0F18FF3F-63D0-4E0C-BC85-2C8B1F2AFB43" id="BPMNShape_sid-0F18FF3F-63D0-4E0C-BC85-2C8B1F2AFB43">
+        <omgdc:Bounds height="28.0" width="28.0" x="435.0" y="165.5"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-950E4CCD-8587-4CC6-BE1A-3D36BD734814" id="BPMNShape_sid-950E4CCD-8587-4CC6-BE1A-3D36BD734814">
+        <omgdc:Bounds height="80.0" width="100.0" x="339.0" y="308.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-A46B9585-6CAE-4FAF-8555-0E258298AD39" id="BPMNShape_sid-A46B9585-6CAE-4FAF-8555-0E258298AD39">
+        <omgdc:Bounds height="28.0" width="28.0" x="615.0" y="334.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="BusinessExceptionOccurredY" id="BPMNShape_BusinessExceptionOccurredY">
+        <omgdc:Bounds height="30.00000000000003" width="30.0" x="277.4500799656279" y="108.75415047959288"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="BusinessExceptionOccurredX" id="BPMNShape_BusinessExceptionOccurredX">
+        <omgdc:Bounds height="30.0" width="30.0" x="276.76" y="221.3875"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-4C354C9C-8A48-4CC1-A664-79FC206F6FA1" id="BPMNShape_sid-4C354C9C-8A48-4CC1-A664-79FC206F6FA1">
+        <omgdc:Bounds height="80.0" width="100.0" x="339.0" y="0.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-06354C75-7C0D-4195-B53C-18CA8058E0A0" id="BPMNShape_sid-06354C75-7C0D-4195-B53C-18CA8058E0A0">
+        <omgdc:Bounds height="28.0" width="28.0" x="615.0" y="26.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sid-37053FBB-9D8E-4BCB-99A9-A6D9C340D9F6" id="BPMNEdge_sid-37053FBB-9D8E-4BCB-99A9-A6D9C340D9F6">
+        <omgdi:waypoint x="129.94999915425154" y="179.5"></omgdi:waypoint>
+        <omgdi:waypoint x="214.0" y="179.5"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="no-exception" id="BPMNEdge_no-exception">
+        <omgdi:waypoint x="309.95000000000005" y="179.5"></omgdi:waypoint>
+        <omgdi:waypoint x="435.0" y="179.5"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-6A386F24-45D4-4DE0-B0B8-C5F01F00C5BF" id="BPMNEdge_sid-6A386F24-45D4-4DE0-B0B8-C5F01F00C5BF">
+        <omgdi:waypoint x="303.7433143816761" y="113.9248456003844"></omgdi:waypoint>
+        <omgdi:waypoint x="342.8888905294803" y="79.95"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-8182F474-78A1-401E-9DD7-7ECBB199EA18" id="BPMNEdge_sid-8182F474-78A1-401E-9DD7-7ECBB199EA18">
+        <omgdi:waypoint x="438.949999999996" y="40.0"></omgdi:waypoint>
+        <omgdi:waypoint x="615.0" y="40.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-BBE1A720-892B-44F4-A255-50537986CE05" id="BPMNEdge_sid-BBE1A720-892B-44F4-A255-50537986CE05">
+        <omgdi:waypoint x="301.58068627152846" y="247.6594048921119"></omgdi:waypoint>
+        <omgdi:waypoint x="354.1508567588756" y="308.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-592B3704-B571-44E2-97FC-D558A5945D29" id="BPMNEdge_sid-592B3704-B571-44E2-97FC-D558A5945D29">
+        <omgdi:waypoint x="438.9499999996748" y="348.0"></omgdi:waypoint>
+        <omgdi:waypoint x="615.0" y="348.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
